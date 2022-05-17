@@ -13,6 +13,9 @@ export const LoginScreen = () => {
     }
     return (
         <form onSubmit={handleSubmit}>
+
+            {/* 下面的写法相当于 <div children={<><label htmlFor="username">username</label> <input type={"text"} id="username"/> </>}/>*/}
+            {/* input元素相当于挂在div中的children属性 */}
             <div>
                 <label htmlFor="username">username</label>
                 <input type={"text"} id="username"/>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import * as auth from "../auth/auth-provider";
 import {User} from "../screens/search-panel";
 
@@ -20,7 +20,7 @@ AuthContext.displayName = 'AuthContext'
 
 
 // 提供给外部使用的方法
-export const AuthProvider = () => {
+export const AuthProvider = ({children}:{children:ReactNode}) => {
     const [user, setUser] = React.useState<User | null>(null)
 
     const login = (form: AuthForm) => auth.login(form).then(user => setUser(user))
@@ -28,7 +28,7 @@ export const AuthProvider = () => {
     const logout = () => auth.logout().then(() => setUser(null))
 
 
-    return <AuthContext.Provider value={{user, login, register, logout}}/>
+    return <AuthContext.Provider children={children} value={{user, login, register, logout}}/>
 }
 // 自定hook
 export const useAuth = () => {
