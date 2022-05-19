@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import {LoginScreen} from "./screens/login";
+import {AuthenticationApp} from "./authentication-app";
+
 
 function App() {
     return (
         <div className="App">
-            <LoginScreen/>
+            <AuthenticationApp/>
         </div>
     );
 }
