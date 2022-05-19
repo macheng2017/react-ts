@@ -1,11 +1,10 @@
 import {FormEvent} from "react";
-import {login, register} from "../../auth/auth-provider";
 import {useAuth} from "../../context/auth-context";
 
 
 export const LoginScreen = () => {
-const {login,user}=useAuth()
-    const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
+    const {login, user} = useAuth()
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const username = (event.currentTarget.elements[0] as HTMLInputElement).value
         const password = (event.currentTarget.elements[1] as HTMLInputElement).value
