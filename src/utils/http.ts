@@ -9,16 +9,16 @@ interface Config extends RequestInit {
     token?: string
 }
 
-export const http = (endpoint: string, {data, token, headers, ...customConfig}: Config) => {
+export const http = (endpoint: string, {data, token, headers, ...customConfig}: Config = {}) => {
     const config = {
         method: 'GET',
         headers: {
-            Authorization: token + `Bearer ${token}`,
+            Authorization: token ? `Bearer ${token}` : '',
             'Content-Type': 'application/json',
         },
         ...customConfig
     }
-    if (config.method === 'GET') {
+    if (config.method.toUpperCase() === 'GET') {
         endpoint += `?${qs.stringify(data)}`
     } else {
         config.body = JSON.stringify(data || {})
@@ -44,5 +44,5 @@ export const http = (endpoint: string, {data, token, headers, ...customConfig}: 
 
 export const useHttp = () => {
     const {user} = useAuth()
-    return ([endpoint,config]:[endpoint:string,config:Config])=>http(endpoint, {...config,token:user?.token})
+    return (...[endpoint, config]: Parameters<typeof http>) => http(endpoint, {...config, token: user?.token})
 }
