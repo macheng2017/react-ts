@@ -1,6 +1,8 @@
 import React, {ReactNode} from "react";
 import * as auth from "../auth/auth-provider";
 import {User} from "../screens/search-panel";
+import {http, useHttp} from "../utils/http";
+import {useMount} from "../utils";
 
 interface AuthForm {
     username: string;
@@ -18,23 +20,35 @@ const AuthContext = React.createContext<{
 } | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
+const bootstrapUser = async () => {
+    let user = null
+    let token = auth.getToken()
+    if (token) {
+        let data = await http('me', {token: token})
+        user = data.user
+    }
+    return user
+}
 
 // 提供给外部使用的方法
-export const AuthProvider = ({children}:{children:ReactNode}) => {
+export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [user, setUser] = React.useState<User | null>(null)
 
     const login = (form: AuthForm) => auth.login(form).then(user => setUser(user))
     const register = (form: AuthForm) => auth.register(form).then(user => setUser(user))
     const logout = () => auth.logout().then(() => setUser(null))
 
+    useMount(()=>{
+        bootstrapUser().then(setUser)
+    })
 
     return <AuthContext.Provider children={children} value={{user, login, register, logout}}/>
 }
 // 自定hook
 export const useAuth = () => {
     const context = React.useContext(AuthContext)
-    if (!context){
-        throw new Error( 'useAuth must be used within an AuthProvider')
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider')
     }
     return context
 }

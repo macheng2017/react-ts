@@ -19,7 +19,6 @@ interface SearchPanelProps {
 export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
     return <form action="">
         <div>
-
             {/* 下面的写法等价于这个{setParam(Object.assign({}, param,{name:evt.target.name}))}*/}
             <input type="text" value={param.name} onChange={(evt) => setParam({
                 ...param,

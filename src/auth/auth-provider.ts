@@ -2,7 +2,7 @@ import {User} from "../screens/search-panel";
 
 const localStorageKey = "__token__";
 const apiUrl = process.env.REACT_APP_API_URL
-const getToken = () => window.localStorage.getItem(localStorageKey)
+export const getToken = () => window.localStorage.getItem(localStorageKey)
 // {user}: { user: User } 这种写法相当于把user的内容放到了一个对象中
 // (user: User) 这种写法拿到的是带 一个key的对象 eg {"user":{"id":193415941,"name":"abc","token":"MTkzNDE1OTQx"}}
 // 而使用({user}:{user:User}) 这种写法拿到的是一个对象，不带key 例如{"id":193415941,"name":"abc","token":"MTkzNDE1OTQx"}
