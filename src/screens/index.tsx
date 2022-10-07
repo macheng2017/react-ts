@@ -33,10 +33,9 @@ export const ProjectListScreen = () => {
     //     return <LoginScreen/>
     // }
     // 这里直接使用自定义hook中引入的logout就行
-    const {logout} = useAuth()
+
 
     return <div>
-        <Button htmlType={"button"} onClick={logout}>登出</Button>
         <SearchPanel param={param} setParam={setParam} users={users}/>
         <List list={list} users={users}/>
     </div>
