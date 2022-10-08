@@ -3,6 +3,7 @@ import {ProjectListScreen} from "./screens";
 import {UnauthenticationdApp} from "./unauthentication-app";
 import styled from "@emotion/styled";
 import {Button} from "antd";
+import {Row} from "./components/lib";
 
 
 export const AuthenticationApp = () => {
@@ -11,7 +12,7 @@ export const AuthenticationApp = () => {
     return (<div>
             {user ? <Container>
                 <Header>
-                    <HeaderLeft>
+                    <HeaderLeft gap={true}>
                         <h3>logo</h3>
                         <h3>项目</h3>
                         <h3>名称</h3>
@@ -20,12 +21,9 @@ export const AuthenticationApp = () => {
                         <Button htmlType={"button"} onClick={logout}>登出</Button>
                     </HeaderRight>
                 </Header>
-                <Nav>nav</Nav>
                 <Main>
                     <ProjectListScreen/>
                 </Main>
-                <Aside>aside</Aside>
-                <Footer>footer</Footer>
             </Container> : <UnauthenticationdApp/>}
             {/*<ProjectListScreen/>*/}
         </div>
@@ -40,28 +38,16 @@ export const AuthenticationApp = () => {
 const Container = styled.div`
   display: grid;
   grid-template-rows: 6rem 1fr 6rem; // 横向排列
-  grid-template-columns: 40rem 1fr 40rem; // 纵向排列
-  // 像格子一样划分区域
-  grid-template-areas:
-          "header header header"
-          "nav main aside"
-          "footer footer footer";
   height: 100vh;
 `
 // 使用grid-area给grid的子元素起个名字
 const Header = styled.header`
-  grid-area: header;
   display: flex;
   flex-direction: row; // 默认是横向的,显式的标注出来
   align-items: center;
   justify-content: space-between;
 `
-const HeaderLeft = styled.div`
-display: flex;
-  align-items: center;
-`
+const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``
-const Main = styled.main`grid-area: main`
-const Aside = styled.aside`grid-area: aside`
-const Footer = styled.footer`grid-area: footer`
-const Nav = styled.nav`grid-area: nav`
+const Main = styled.main``
+
