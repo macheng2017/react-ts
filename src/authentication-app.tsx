@@ -9,24 +9,36 @@ export const AuthenticationApp = () => {
     const {user} = useAuth()
     const {logout} = useAuth()
     return (<div>
-            {user ? <div>
-                <PageHeader>
+            {user ? <Container>
+                <Header>
                     <Button htmlType={"button"} onClick={logout}>登出</Button>
-                </PageHeader>
+                </Header>
+                <Nav>nav</Nav>
                 <Main>
                     <ProjectListScreen/>
                 </Main>
-            </div> : <UnauthenticationdApp/>}
+                <Aside>aside</Aside>
+                <Footer>footer</Footer>
+            </Container> : <UnauthenticationdApp/>}
             {/*<ProjectListScreen/>*/}
         </div>
     )
 }
 
 
-const PageHeader = styled.header`
-  background-color: gray;
-  height: 4rem
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-columns: 40rem 1fr 40rem;
+  grid-template-areas:
+          "header header header"
+          "nav main aside"
+          "footer footer footer";
+  height: 100vh;
 `
-const Main = styled.main`
-  height: calc(100vh - 4rem);
-`
+// 使用grid-area给grid的子元素起个名字
+const Header = styled.header` grid-area: header`
+const Main = styled.main`grid-area: main`
+const Aside = styled.aside`grid-area: aside`
+const Footer = styled.footer`grid-area: footer`
+const Nav = styled.nav`grid-area: nav`
