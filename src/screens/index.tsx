@@ -3,8 +3,6 @@ import {useEffect, useState} from "react";
 import {SearchPanel} from "./search-panel";
 import {CleanObj, useDebounce, useMount} from "../utils";
 import {useHttp} from "../utils/http";
-import {Button} from "antd";
-import {useAuth} from "../context/auth-context";
 import styled from "@emotion/styled";
 
 export const ProjectListScreen = () => {

@@ -4,6 +4,7 @@ import {UnauthenticationdApp} from "./unauthentication-app";
 import styled from "@emotion/styled";
 import {Button} from "antd";
 import {Row} from "./components/lib";
+import {ReactComponent as SoftwareLogo} from "./assets/software-logo.svg";
 
 
 export const AuthenticationApp = () => {
@@ -13,7 +14,8 @@ export const AuthenticationApp = () => {
             {user ? <Container>
                 <Header between={true}>
                     <HeaderLeft gap={true}>
-                        <h3>logo</h3>
+                        {/*<img src={softwareLogo}/>*/}
+                        <SoftwareLogo width={'18rem'} color={'rgb(38,138,255)'}/>
                         <h3>项目</h3>
                         <h3>名称</h3>
                     </HeaderLeft>
@@ -41,7 +43,9 @@ const Container = styled.div`
   height: 100vh;
 `
 // 使用grid-area给grid的子元素起个名字
-const Header = styled(Row)``
+const Header = styled(Row)`
+  padding: 3.2rem;
+`
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``
 const Main = styled.main``
