@@ -11,7 +11,7 @@ export const AuthenticationApp = () => {
     const {logout} = useAuth()
     return (<div>
             {user ? <Container>
-                <Header>
+                <Header between={true}>
                     <HeaderLeft gap={true}>
                         <h3>logo</h3>
                         <h3>项目</h3>
@@ -41,12 +41,7 @@ const Container = styled.div`
   height: 100vh;
 `
 // 使用grid-area给grid的子元素起个名字
-const Header = styled.header`
-  display: flex;
-  flex-direction: row; // 默认是横向的,显式的标注出来
-  align-items: center;
-  justify-content: space-between;
-`
+const Header = styled(Row)``
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``
 const Main = styled.main``
