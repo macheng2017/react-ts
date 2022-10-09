@@ -2,14 +2,14 @@ import {useAuth} from "./context/auth-context";
 import {ProjectListScreen} from "./screens";
 import {UnauthenticationdApp} from "./unauthentication-app";
 import styled from "@emotion/styled";
-import {Button} from "antd";
+import {Dropdown, Menu} from "antd";
 import {Row} from "./components/lib";
 import {ReactComponent as SoftwareLogo} from "./assets/software-logo.svg";
 
 
 export const AuthenticationApp = () => {
-    const {user} = useAuth()
-    const {logout} = useAuth()
+
+    const {logout, user} = useAuth()
     return (<div>
             {user ? <Container>
                 <Header between={true}>
@@ -20,7 +20,11 @@ export const AuthenticationApp = () => {
                         <h3>名称</h3>
                     </HeaderLeft>
                     <HeaderRight>
-                        <Button htmlType={"button"} onClick={logout}>登出</Button>
+                        <Dropdown overlay={<Menu>
+                            <a onClick={logout}>登出</a>
+                        </Menu>}>
+                            <a onClick={event => event.preventDefault()}>hi, {user?.name}</a>
+                        </Dropdown>
                     </HeaderRight>
                 </Header>
                 <Main>
@@ -45,6 +49,8 @@ const Container = styled.div`
 // 使用grid-area给grid的子元素起个名字
 const Header = styled(Row)`
   padding: 3.2rem;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``
