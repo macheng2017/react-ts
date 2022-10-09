@@ -1,3 +1,6 @@
+import {Form, Input, Select} from "antd";
+
+
 export interface User {
     id: string;
     name: string;
@@ -17,20 +20,23 @@ interface SearchPanelProps {
 }
 
 export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
-    return <form action="">
-        <div>
+    return <Form layout={"inline"} style={{marginBottom: '2rem'}} >
+        <Form.Item>
             {/* 下面的写法等价于这个{setParam(Object.assign({}, param,{name:evt.target.name}))}*/}
-            <input type="text" value={param.name} onChange={(evt) => setParam({
+            <Input placeholder={'项目名'} type="text" value={param.name} onChange={(evt) => setParam({
                 ...param,
                 name: evt.target.value
             })}/>
-            <select value={param.personId} onChange={(evt) => setParam({
+
+        </Form.Item>
+        <Form.Item>
+            <Select value={param.personId} onChange={(value) => setParam({
                 ...param,
-                personId: evt.target.value
+                personId: value
             })}>
-                <option value="">负责人</option>
+                <Select.Option value="">负责人</Select.Option>
                 {users.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
-            </select>
-        </div>
-    </form>
+            </Select>
+        </Form.Item>
+    </Form>
 }

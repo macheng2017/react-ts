@@ -1,5 +1,6 @@
 import {User} from "./search-panel";
 import {Table} from "antd";
+import dayjs from "dayjs";
 
 interface Project {
     id: string;
@@ -7,6 +8,7 @@ interface Project {
     personId: string;
     pin: string;
     organization: string;
+    created: number;
 }
 
 interface ListProps {
@@ -21,14 +23,22 @@ export const List = ({list, users}: ListProps) => {
     // 下面的做法是直接输入显示了,这里的想法是想生成一个新的数组再到下面循环使用
     return <Table dataSource={list} columns={[
         {title: '名称', dataIndex: 'name', key: 'name'},
+        {title: '部门', dataIndex: 'organization', key: 'organization'},
         {
             title: '负责',
             dataIndex: 'id',
             key: 'id',
             render: (_, project) => {
                 return <>{users.find(v => v.id === project.personId)?.name || '未知'}</>
+            },
+        },
+        {
+            title: '创建时间', dataIndex: 'created', key: 'created',
+            render: (_, project) => {
+                return <span> {project.created ? dayjs(project.created).format('YYYY-MM-DD') : '无'}</span>
             }
-        }]}></Table>
+        },
+    ]}></Table>
     // <table>
     //     <thead>
     //     <tr>

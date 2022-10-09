@@ -5,6 +5,7 @@ import {CleanObj, useDebounce, useMount} from "../utils";
 import {useHttp} from "../utils/http";
 import {Button} from "antd";
 import {useAuth} from "../context/auth-context";
+import styled from "@emotion/styled";
 
 export const ProjectListScreen = () => {
     // {"status":404,"message":"No user with the id \"193416166193416160\""}
@@ -35,8 +36,11 @@ export const ProjectListScreen = () => {
     // 这里直接使用自定义hook中引入的logout就行
 
 
-    return <div>
+    return <Container>
         <SearchPanel param={param} setParam={setParam} users={users}/>
         <List list={list} users={users}/>
-    </div>
+    </Container>
 }
+const Container = styled.div`
+  padding: 3.2rem;
+`;
