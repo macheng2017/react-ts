@@ -21,7 +21,7 @@ export const List = ({list, users}: ListProps) => {
     //     return users.find(user => item.personId === user.personId ? item.name : item.personId)
     // })
     // 下面的做法是直接输入显示了,这里的想法是想生成一个新的数组再到下面循环使用
-    return <Table dataSource={list} columns={[
+    return <Table rowKey={list=>list.id} dataSource={list} columns={[
         {title: '名称', dataIndex: 'name', key: 'name'},
         {title: '部门', dataIndex: 'organization', key: 'organization'},
         {
