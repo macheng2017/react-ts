@@ -5,12 +5,16 @@ const isFalsy = (res: any) => {
     // !!res 可以把结果转化为Boolean值
     return res === 0 ? true : !!res
 }
+// 解决CleanObj防止当val 为 字面量 false的时候被删掉的bug
+const isValue = (val:unknown)=>{
+    return val === null || '' || undefined
+}
 // 使用[key:string]:unknown 确定的高速typescript这里要的是一个k-v形式的object
 export const CleanObj = (obj: { [key: string]: unknown }) => {
     const res = {...obj}
     Object.keys(res).forEach(k => {
 
-        if (!isFalsy(res[k])) {
+        if (isValue(res[k])) {
 
             delete res[k]
         }
