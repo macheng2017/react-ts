@@ -5,12 +5,13 @@ const isFalsy = (res: any) => {
     // !!res 可以把结果转化为Boolean值
     return res === 0 ? true : !!res
 }
-export const CleanObj = (obj: object) => {
+// 使用[key:string]:unknown 确定的高速typescript这里要的是一个k-v形式的object
+export const CleanObj = (obj: { [key: string]: unknown }) => {
     const res = {...obj}
     Object.keys(res).forEach(k => {
-        // @ts-ignore
+
         if (!isFalsy(res[k])) {
-            // @ts-ignore
+
             delete res[k]
         }
     })
@@ -40,7 +41,7 @@ export const useMount = (callback: () => void) => {
 // const log = debounce(()=>{ console.log('hello')},2000)
 // log()
 // log()
-export const useDebounce = <T>(value:T, delay?: number)=> {
+export const useDebounce = <T>(value: T, delay?: number) => {
     const [debouncedValue, setDebounceValue] = useState(value)
     useEffect(() => {
         // 1. 设定一个延迟更新 delay延迟时间的间隔

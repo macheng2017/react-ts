@@ -1,7 +1,7 @@
 import React, {ReactNode} from "react";
 import * as auth from "../auth/auth-provider";
 import {User} from "../screens/search-panel";
-import {http, useHttp} from "../utils/http";
+import {http} from "../utils/http";
 import {useMount} from "../utils";
 
 interface AuthForm {
