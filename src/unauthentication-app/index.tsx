@@ -16,7 +16,7 @@ export const UnauthenticationdApp = () => {
             <Title>{isLoggedIn ? "请注册" : "请登录"} </Title>
             {isLoggedIn ? <RegisterScreen/> : <LoginScreen/>}
             <Divider/>
-            <a onClick={() => setIsLoggedIn(!isLoggedIn)}>{isLoggedIn ? "已经有账号了?点我登录" : "还没有账号?点我注册"}</a>
+            <Button type={'link'} onClick={() => setIsLoggedIn(!isLoggedIn)}>{isLoggedIn ? "已经有账号了?点我登录" : "还没有账号?点我注册"}</Button>
         </ShadowCard>
     </Container>
 }

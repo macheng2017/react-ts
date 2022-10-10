@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
 
-const isFalsy = (res: any) => {
-    // 这里的函数的作用是为了排除if(res[k]); res[k]=0有意义的这种情况的
-    // !!res 可以把结果转化为Boolean值
-    return res === 0 ? true : !!res
-}
+// const isFalsy = (res: any) => {
+//     // 这里的函数的作用是为了排除if(res[k]); res[k]=0有意义的这种情况的
+//     // !!res 可以把结果转化为Boolean值
+//     return res === 0 ? true : !!res
+// }
 // 解决CleanObj防止当val 为 字面量 false的时候被删掉的bug
-const isValue = (val:unknown)=>{
+const isValue = (val: unknown) => {
     return val === null || '' || undefined
 }
 // 使用[key:string]:unknown 确定的高速typescript这里要的是一个k-v形式的object
@@ -25,6 +25,7 @@ export const CleanObj = (obj: { [key: string]: unknown }) => {
 export const useMount = (callback: () => void) => {
     useEffect(() => {
         callback()
+        // eslint-disable-next-line
     }, [])
 }
 // 注意上面的写法 与 直接写callback 有什么区别?

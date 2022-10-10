@@ -20,6 +20,7 @@ export const ProjectListScreen = () => {
     const client = useHttp()
     useEffect(() => {
         client('projects', {data: CleanObj(debouncedParam)}).then(setList)
+        // eslint-disable-next-line
     }, [debouncedParam])
     // 使用自定义hook
     useMount(() => {
