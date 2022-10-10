@@ -2,7 +2,7 @@ import {useAuth} from "./context/auth-context";
 import {ProjectListScreen} from "./screens";
 import {UnauthenticationdApp} from "./unauthentication-app";
 import styled from "@emotion/styled";
-import {Dropdown, Menu} from "antd";
+import {Button, Dropdown, Menu} from "antd";
 import {Row} from "./components/lib";
 import {ReactComponent as SoftwareLogo} from "./assets/software-logo.svg";
 
@@ -21,9 +21,11 @@ export const AuthenticationApp = () => {
                     </HeaderLeft>
                     <HeaderRight>
                         <Dropdown overlay={<Menu>
-                            <a onClick={logout}>登出</a>
+                            <Menu.Item>
+                                <Button type={'link'}onClick={logout}>登出</Button>
+                            </Menu.Item>
                         </Menu>}>
-                            <a onClick={event => event.preventDefault()}>hi, {user?.name}</a>
+                            <Button type={'link'} onClick={event => event.preventDefault()}>hi, {user?.name}</Button>
                         </Dropdown>
                     </HeaderRight>
                 </Header>
