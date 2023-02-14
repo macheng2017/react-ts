@@ -4,11 +4,14 @@ import {SearchPanel} from "./search-panel";
 import {CleanObj, useDebounce, useMount} from "../utils";
 import {useHttp} from "../utils/http";
 import styled from "@emotion/styled";
+import {Typography} from "antd";
 
 export const ProjectListScreen = () => {
     // {"status":404,"message":"No user with the id \"193416166193416160\""}
     // 这里找不到 user id 很奇怪,没有说要user id 啊
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<null | Error>(null)
+
     const [param, setParam] = useState({
         name: '',
         personId: ''
@@ -21,9 +24,14 @@ export const ProjectListScreen = () => {
     const client = useHttp()
     useEffect(() => {
         setIsLoading(true)
-        client('projects', {data: CleanObj(debouncedParam)}).then(setList).finally(() => {
-            setIsLoading(false)
-        })
+        client('projects', {data: CleanObj(debouncedParam)}).then(setList)
+            .catch(error => {
+                setList([])
+                setError(error)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
         // eslint-disable-next-line
     }, [debouncedParam])
     // 使用自定义hook
@@ -37,9 +45,14 @@ export const ProjectListScreen = () => {
     //     return <LoginScreen/>
     // }
     // 这里直接使用自定义hook中引入的logout就行
-
-
+    //
+    // useEffect(() => {
+    //     // error ? setList([]) : null
+    //     if (error) setList([])
+    // }, [error])
     return <Container>
+        <h1>项目列表</h1>
+        {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
         <SearchPanel param={param} setParam={setParam} users={users}/>
         <List loading={isLoading} dataSource={list} users={users}/>
     </Container>
