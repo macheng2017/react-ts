@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 export const ProjectListScreen = () => {
     // {"status":404,"message":"No user with the id \"193416166193416160\""}
     // 这里找不到 user id 很奇怪,没有说要user id 啊
+    const [isLoading, setIsLoading] = useState(false)
     const [param, setParam] = useState({
         name: '',
         personId: ''
@@ -19,7 +20,10 @@ export const ProjectListScreen = () => {
     const [users, setUsers] = useState([])
     const client = useHttp()
     useEffect(() => {
-        client('projects', {data: CleanObj(debouncedParam)}).then(setList)
+        setIsLoading(true)
+        client('projects', {data: CleanObj(debouncedParam)}).then(setList).finally(() => {
+            setIsLoading(false)
+        })
         // eslint-disable-next-line
     }, [debouncedParam])
     // 使用自定义hook
@@ -37,7 +41,7 @@ export const ProjectListScreen = () => {
 
     return <Container>
         <SearchPanel param={param} setParam={setParam} users={users}/>
-        <List list={list} users={users}/>
+        <List loading={isLoading} dataSource={list} users={users}/>
     </Container>
 }
 const Container = styled.div`

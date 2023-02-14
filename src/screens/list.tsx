@@ -1,5 +1,5 @@
 import {User} from "./search-panel";
-import {Table} from "antd";
+import {Table, TableProps} from "antd";
 import dayjs from "dayjs";
 
 interface Project {
@@ -11,17 +11,22 @@ interface Project {
     created: number;
 }
 
-interface ListProps {
-    list: Project[],
+// 这样我们传入的数据已经包含在TableProps当中了,叫做DataSource,可以把list:Project[] 删除了
+interface ListProps extends TableProps<Project> {
     users: User[]
 }
-
-export const List = ({list, users}: ListProps) => {
+// 注意这里的写法,{users, ...props}其实 ListProps包含两部分参数,一部分是user,另一部分是TableProps
+// {users,...props}中的...props是去掉users的剩余部分
+// 如果定义一个类型别名 type PropsType = Omit<ListProps,'users'>
+export const List = ({users, ...props}: ListProps) => {
     // const newList = list.map(item => {
     //     return users.find(user => item.personId === user.personId ? item.name : item.personId)
     // })
     // 下面的做法是直接输入显示了,这里的想法是想生成一个新的数组再到下面循环使用
-    return <Table rowKey={list=>list.id} dataSource={list} columns={[
+    // 2023年10月14日 现在为了添加一个loading的状态,其实ant组件的table中有一个loading属性,如果直接添加需要在ListProps也要添加相应的属性
+    // 考虑到以后还有其他属性添加改动, 这里考虑能不能从外界list中直接透传到Table上而不用添加接口定义,方法是有的让ListProps extends 一个tableProps
+    // 这里的DataSource就可以删掉了,为啥可以删掉了?
+    return <Table rowKey={list => list.id} columns={[
         {title: '名称', dataIndex: 'name', key: 'name'},
         {title: '部门', dataIndex: 'organization', key: 'organization'},
         {
@@ -38,7 +43,7 @@ export const List = ({list, users}: ListProps) => {
                 return <span> {project.created ? dayjs(project.created).format('YYYY-MM-DD') : '无'}</span>
             }
         },
-    ]}></Table>
+    ]} {...props}/>
     // <table>
     //     <thead>
     //     <tr>
