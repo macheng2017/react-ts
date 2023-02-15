@@ -2,7 +2,7 @@ import {useAuth} from "./context/auth-context";
 import {ProjectListScreen} from "./screens";
 import {UnauthenticationdApp} from "./unauthentication-app";
 import styled from "@emotion/styled";
-import {Button, Dropdown, Menu} from "antd";
+import {Button, Dropdown, MenuProps} from "antd";
 import {Row} from "./components/lib";
 import {ReactComponent as SoftwareLogo} from "./assets/software-logo.svg";
 
@@ -10,6 +10,10 @@ import {ReactComponent as SoftwareLogo} from "./assets/software-logo.svg";
 export const AuthenticationApp = () => {
 
     const {logout, user} = useAuth()
+    const items: MenuProps['items'] = [{
+        key: '1',
+        label: (<Button type={'link'} onClick={logout}>登出</Button>)
+    }]
     return (<div>
             {user ? <Container>
                 <Header between={true}>
@@ -20,11 +24,7 @@ export const AuthenticationApp = () => {
                         <h3>名称</h3>
                     </HeaderLeft>
                     <HeaderRight>
-                        <Dropdown overlay={<Menu>
-                            <Menu.Item>
-                                <Button type={'link'}onClick={logout}>登出</Button>
-                            </Menu.Item>
-                        </Menu>}>
+                        <Dropdown menu={{items}}>
                             <Button type={'link'} onClick={event => event.preventDefault()}>hi, {user?.name}</Button>
                         </Dropdown>
                     </HeaderRight>
