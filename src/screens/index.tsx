@@ -1,37 +1,31 @@
-import {List} from "./list";
+import {List, Project} from "./list";
 import {useEffect, useState} from "react";
 import {SearchPanel} from "./search-panel";
 import {CleanObj, useDebounce, useMount} from "../utils";
 import {useHttp} from "../utils/http";
 import styled from "@emotion/styled";
 import {Typography} from "antd";
+import {useAsync} from "../utils/use-async";
 
 export const ProjectListScreen = () => {
     // {"status":404,"message":"No user with the id \"193416166193416160\""}
     // 这里找不到 user id 很奇怪,没有说要user id 啊
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState<null | Error>(null)
+    // const [isLoading, setIsLoading] = useState(false)
+    // const [error, setError] = useState<null | Error>(null)
 
     const [param, setParam] = useState({
         name: '',
         personId: ''
     })
     const debouncedParam = useDebounce(param, 200)
+    const {run, isLoading, error, data: list} = useAsync<Project[]>()
     // 请求项目列表的api需要用到useEffect
     // 这个组件中的list其他组件也需要用到,需要状态提升到父组件当中
-    const [list, setList] = useState([])
+    // const [list, setList] = useState([])
     const [users, setUsers] = useState([])
     const client = useHttp()
     useEffect(() => {
-        setIsLoading(true)
-        client('projects', {data: CleanObj(debouncedParam)}).then(setList)
-            .catch(error => {
-                setList([])
-                setError(error)
-            })
-            .finally(() => {
-                setIsLoading(false)
-            })
+        run(client('projects', {data: CleanObj(debouncedParam)}))
         // eslint-disable-next-line
     }, [debouncedParam])
     // 使用自定义hook
@@ -54,7 +48,7 @@ export const ProjectListScreen = () => {
         <h1>项目列表</h1>
         {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
         <SearchPanel param={param} setParam={setParam} users={users}/>
-        <List loading={isLoading} dataSource={list} users={users}/>
+        <List loading={isLoading} dataSource={list || []} users={users}/>
     </Container>
 }
 const Container = styled.div`
