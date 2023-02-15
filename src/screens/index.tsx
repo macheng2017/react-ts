@@ -1,11 +1,11 @@
-import {List, Project} from "./list";
-import {useEffect, useState} from "react";
+import {List} from "./list";
+import {useState} from "react";
 import {SearchPanel} from "./search-panel";
-import {CleanObj, useDebounce, useMount} from "../utils";
+import {useDebounce, useMount} from "../utils";
 import {useHttp} from "../utils/http";
 import styled from "@emotion/styled";
 import {Typography} from "antd";
-import {useAsync} from "../utils/use-async";
+import {useProject} from "../utils/use-project";
 
 export const ProjectListScreen = () => {
     // {"status":404,"message":"No user with the id \"193416166193416160\""}
@@ -18,16 +18,12 @@ export const ProjectListScreen = () => {
         personId: ''
     })
     const debouncedParam = useDebounce(param, 200)
-    const {run, isLoading, error, data: list} = useAsync<Project[]>()
+    const {isLoading, error, data: list} = useProject(debouncedParam)
     // 请求项目列表的api需要用到useEffect
     // 这个组件中的list其他组件也需要用到,需要状态提升到父组件当中
     // const [list, setList] = useState([])
     const [users, setUsers] = useState([])
     const client = useHttp()
-    useEffect(() => {
-        run(client('projects', {data: CleanObj(debouncedParam)}))
-        // eslint-disable-next-line
-    }, [debouncedParam])
     // 使用自定义hook
     useMount(() => {
         client('users').then(setUsers)
